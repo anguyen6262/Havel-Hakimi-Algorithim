@@ -1,3 +1,5 @@
+package src;
+
 import edu.macalester.graphics.Ellipse;
 
 public class Vertex extends Ellipse{

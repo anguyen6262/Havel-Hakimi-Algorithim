@@ -1,4 +1,4 @@
-package adjacencyListActivity;
+package haveliHakimi;
 /**
  *  The {@code SymbolGraph} class represents an undirected graph, where the
  *  vertex names are arbitrary strings.

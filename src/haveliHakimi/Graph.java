@@ -1,4 +1,4 @@
-package adjacencyListActivity;
+package haveliHakimi;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;

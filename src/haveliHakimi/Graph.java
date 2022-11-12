@@ -131,7 +131,6 @@ public class Graph {
      * @return the number of vertices in this graph
      */
     public int V() {
-        // TODO: Return the number of vertices in this graph
         return V;
 
     }
@@ -142,7 +141,6 @@ public class Graph {
      * @return the number of edges in this graph
      */
     public int E() {
-        // TODO: Return the number of edges in this graph
         return E;
 
     }
@@ -161,7 +159,6 @@ public class Graph {
      * @throws IllegalArgumentException unless both {@code 0 <= v < V} and {@code 0 <= w < V}
      */
     public void addEdge(int v, int w) {
-        //TODO: Complete the addEdge method. Check if both vertices are on the graph.
         validateVertex(v);
         validateVertex(w);
         // If so, increment the total number of edges
@@ -182,7 +179,6 @@ public class Graph {
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public Iterable<Integer> adj(int v) {
-        // TODO: Return the vertices adjacent to vertex v. Make sure that v exists
         validateVertex(v);
         return adj[v];
 
@@ -196,7 +192,6 @@ public class Graph {
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int degree(int v) {
-        // TODO: Return the degree of vertex v. Make sure that v exists
         validateVertex(v);
         return adj[v].size();
  

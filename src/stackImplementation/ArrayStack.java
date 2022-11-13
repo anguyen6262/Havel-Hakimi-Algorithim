@@ -1,4 +1,4 @@
-package stackImplementation.arrayStack;
+package stackImplementation;
 
 import stackImplementation.StackADT;
 import stackImplementation.exceptions.*;
@@ -42,9 +42,7 @@ public class ArrayStack<T> implements StackADT<T>
 	 * the capacity of the array if necessary.
 	 * @param element generic element to be pushed onto stack
 	 */
-	public void push(T element)
-	{
-		//TODO: Add the element to the internal data structure, expanding if necessary, update any needed variables
+	public void push(T element) {
 		if (top == stack.length) {
 			expandCapacity();
 		}
@@ -97,9 +95,7 @@ public class ArrayStack<T> implements StackADT<T>
 	 * Returns true if this stack is empty and false otherwise. 
 	 * @return true if this stack is empty
 	 */
-	public boolean isEmpty()
-	{
-		//TODO To be completed
+	public boolean isEmpty(){
 		return top== 0;  // temp
 	}
 
@@ -107,9 +103,7 @@ public class ArrayStack<T> implements StackADT<T>
 	 * Returns the number of elements in this stack.
 	 * @return the number of elements in the stack
 	 */
-	public int size()
-	{
-		//TODO To be completed
+	public int size(){
 		return top;  // temp
 	}
 

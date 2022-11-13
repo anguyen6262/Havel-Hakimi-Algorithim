@@ -2,10 +2,16 @@ package haveliHakimi;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+
+import javax.sound.midi.Sequence;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.Point;
+import stackImplementation.ArrayStack;
 import edu.macalester.graphics.Line;
 import edu.macalester.graphics.GraphicsText;
 
@@ -34,9 +40,55 @@ public class State {
         return verticeList;
     }
 
-    // private void drawEdges() {
+    // private void createEdges(CanvasWindow canvas, Bag<Integer>[] graph) {
+    //     for(int i = 0; i < graph.length; i++){
+    //         for(int j = 0; j < verticeList.size(); j++){
+    //             if(i.contains(j))
+    //         }
+    //         Line edge = new Line(new Point(vertex), new Point())
+    //         canvas.add(edge);
+
+    //     }
 
     // }
+
+    private boolean isGraphical(int[] degreeSequence) {
+        if(check1(degreeSequence) == true && check2(degreeSequence) == true && haveliHakimi(degreeSequence) == true) {
+            return true;
+        }
+        System.out.println("Degree sequence is not graphical");
+        return false;
+    }
+
+    private boolean haveliHakimi(int[] degreeSequence) {   
+        while(){
+            Arrays.sort(degreeSequence);
+            degreeSequence
+        }
+        System.out.println();
+
+        if()
+        return false;
+    }
+
+    private boolean check1(int[] degreeSequence) {
+        int total = 0;
+        for(int num: degreeSequence){
+            total += num;
+        }
+        if(degreeSequence.length % 2 != 0 && total % 2 != 0){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean check2(int[] degreeSequence) {
+        Arrays.sort(degreeSequence);
+        if(degreeSequence[0] > degreeSequence.length) {
+            return false;
+        }
+        return true;
+    }
 
     private void createVertex(CanvasWindow canvas, double degree) {
         Ellipse vertex = new Ellipse(canvasWidth / 2 - 15, canvasHeight / 2 - 115, 30, 30);
@@ -47,7 +99,7 @@ public class State {
     }
 
     private void createText(CanvasWindow canvas, double degree, String num) {
-        GraphicsText text = new GraphicsText(num, canvasWidth / 2 - 19, canvasHeight / 2 - 110);
+        GraphicsText text = new GraphicsText(num, canvasWidth / 2 - 4, canvasHeight / 2 - 95);
         text.setAnchor(5,95);
         text.setRotation(degree);
         canvas.add(text);

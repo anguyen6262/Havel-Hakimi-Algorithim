@@ -61,7 +61,7 @@ public class State {
     }
 
     // private boolean haveliHakimi(int[] degreeSequence) {   
-    //     while(){
+    //     while(check1(degreeSequence) == true && check2(degreeSequence) == true){
     //         for(int i = 0; i < degreeSequence.length; i++){
     //             Arrays.sort(degreeSequence);
     //             for(int j = i + 1; j < degreeSequence[0])

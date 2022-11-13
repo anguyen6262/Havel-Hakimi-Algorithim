@@ -60,16 +60,17 @@ public class State {
         return false;
     }
 
-    private boolean haveliHakimi(int[] degreeSequence) {   
-        while(){
-            Arrays.sort(degreeSequence);
-            degreeSequence
-        }
-        System.out.println();
-
-        if()
-        return false;
-    }
+    // private boolean haveliHakimi(int[] degreeSequence) {   
+    //     while(){
+    //         for(int i = 0; i < degreeSequence.length; i++){
+    //             Arrays.sort(degreeSequence);
+    //             for(int j = i + 1; j < degreeSequence[0])
+    //         }
+    //     }
+    //     System.out.println();
+    //     if()
+    //     return false;
+    // }
 
     private boolean check1(int[] degreeSequence) {
         int total = 0;

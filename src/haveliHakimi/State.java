@@ -1,7 +1,9 @@
 package haveliHakimi;
 
 import java.awt.Color;
+import java.io.Console;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,17 +44,21 @@ public class State {
         canvas.add(midVertex);
         double interval = 360 / numVertices;
         double degree = 0.0;
-        for(Integer i = 1; i <= numVertices; i++){
+        for(Integer i = 0; i <= numVertices; i++){
             createVertex(canvas, degree, i);
             createText(canvas, degree, i.toString());
             degree += interval;
         }   
     }
 
-    private void drawEdges(CanvasWindow canvas, Graph graph) {
-        for(int i = 0; i < graph.V(); i++){
-            for(int neighbor : graph.adj(i)){
-                createEdge(canvas, graph, i, neighbor);
+    private void drawEdges(CanvasWindow canvas, Graph graph, ArrayList<Integer> degreeSequence) {
+        for(int i = 0; i < degreeSequence.size() - 1; i++){
+            if(degreeSequence.get(i) < graph.degree(i)){
+                for(int j = i + 1; j < degreeSequence.size(); j++){
+                    if(degreeSequence.get(j)< graph.degree(j)) {
+                        createEdge(canvas, graph, i, j);
+                    }
+                }
             }
         }
     }
@@ -62,7 +68,17 @@ public class State {
         vertex.setAnchor(15,115);
         vertex.setRotation(degree);
         canvas.add(vertex);
+        // Point location = canvas.getElementAt(vertex.getCenter()).getCenter();
+       
         verticesMap.put(num, vertex);
+        // Line line = new Line(new Point(canvasWidth / 2, canvasHeight / 2 ), new Point(canvasWidth / 2, canvasHeight / 2 - 100));
+        // line.setRotation(degree);
+        // Ellipse vertex = new Ellipse(line.getX2(),line.getY2(), 30, 30);
+        // vertex.setCenter(new Point(line.getX2(),line.getY2()));
+        // canvas.add(vertex);
+        // canvas.add(line);
+        // line.setAnchor(0,line.getHeight()/2);
+        // verticesMap.put(num, vertex);
     }
 
     private void createEdge(CanvasWindow canvas, Graph graph, int source, int target) {
@@ -82,14 +98,15 @@ public class State {
         CanvasWindow canvas = new CanvasWindow("State", 800, 600);
         State state = new State();
         Graph graph = new Graph(5);
-        graph.addEdge(1, 4);
-        graph.addEdge(2, 1);
-        graph.addEdge(3, 4);
-        graph.addEdge(3, 2);
+        // graph.addEdge(1, 4);
+        // graph.addEdge(2, 1);
+        // graph.addEdge(3, 4);
+        // graph.addEdge(3, 2);
         state.drawVertices(canvas,graph.V());
-        state.drawEdges(canvas,graph);
-        Line test = new Line(state.verticesMap.get(0).getCenter(), state.verticesMap.get(1).getCenter());;
-        canvas.add(test);
+        state.drawEdges(canvas,graph, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        System.out.println(graph.toString());
+        // Line test = new Line(state.verticesMap.get(0).getCenter(), state.verticesMap.get(2).getCenter());;
+        // canvas.add(test);
         
         
         // state.drawVertices(canvas, graph.V());
@@ -115,10 +132,7 @@ public class State {
     // removeEdge(g,"b1");
     // removeEdge(g,"b2");
     // removeEdge(g,"b3");
-    
-    // System.out.println(g.getEdge(1, 2));
-    
-        
+    // System.out.println(g.getEdge(1, 2));        
     //     state.drawVertices(canvas, g.vertexSet().size());
         
     }

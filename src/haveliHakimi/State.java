@@ -44,7 +44,7 @@ public class State {
         canvas.add(midVertex);
         double interval = 360 / numVertices;
         double degree = 0.0;
-        for(Integer i = 0; i <= numVertices; i++){
+        for(Integer i = 0; i < numVertices; i++){
             createVertex(canvas, degree, i);
             createText(canvas, degree, i.toString());
             degree += interval;
@@ -52,10 +52,11 @@ public class State {
     }
 
     private void drawEdges(CanvasWindow canvas, Graph graph, ArrayList<Integer> degreeSequence) {
+        Collections.sort(degreeSequence, Collections.reverseOrder());
         for(int i = 0; i < degreeSequence.size() - 1; i++){
-            if(degreeSequence.get(i) < graph.degree(i)){
-                for(int j = i + 1; j < degreeSequence.size(); j++){
-                    if(degreeSequence.get(j)< graph.degree(j)) {
+            if(degreeSequence.get(i) > graph.degree(i)){
+                for(int j = 1; j < degreeSequence.size(); j++){
+                    if(degreeSequence.get(j) > graph.degree(j)) {
                         createEdge(canvas, graph, i, j);
                     }
                 }
@@ -97,7 +98,7 @@ public class State {
     public static void main(String[] args) {
         CanvasWindow canvas = new CanvasWindow("State", 800, 600);
         State state = new State();
-        Graph graph = new Graph(5);
+        Graph graph = new Graph(7);
         // graph.addEdge(1, 4);
         // graph.addEdge(2, 1);
         // graph.addEdge(3, 4);

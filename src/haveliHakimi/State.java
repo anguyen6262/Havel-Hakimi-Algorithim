@@ -6,6 +6,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.nio.*;
+import org.jgrapht.nio.dot.*;
+import org.jgrapht.traverse.*;
+
 import javax.sound.midi.Sequence;
 
 import edu.macalester.graphics.CanvasWindow;
@@ -16,6 +22,7 @@ import edu.macalester.graphics.Line;
 import edu.macalester.graphics.GraphicsText;
 
 public class State {
+    
     private MainWindow window = new MainWindow();
     ArrayList<Ellipse> verticeList = new ArrayList<>();
     private int canvasHeight = window.getCanvasHeight();
@@ -40,56 +47,56 @@ public class State {
         return verticeList;
     }
 
-    // private void createEdges(CanvasWindow canvas, Bag<Integer>[] graph) {
-    //     for(int i = 0; i < graph.length; i++){
-    //         for(int j = 0; j < verticeList.size(); j++){
-    //             if(i.contains(j))
-    //         }
-    //         Line edge = new Line(new Point(vertex), new Point())
-    //         canvas.add(edge);
+    // // private void createEdges(CanvasWindow canvas, Bag<Integer>[] graph) {
+    // //     for(int i = 0; i < graph.length; i++){
+    // //         for(int j = 0; j < verticeList.size(); j++){
+    // //             if(i.contains(j))
+    // //         }
+    // //         Line edge = new Line(new Point(vertex), new Point())
+    // //         canvas.add(edge);
 
+    // //     }
+
+    // // }
+
+    // private boolean isGraphical(int[] degreeSequence) {
+    //     if(check1(degreeSequence) == true && check2(degreeSequence) == true && haveliHakimi(degreeSequence) == true) {
+    //         return true;
     //     }
-
-    // }
-
-    private boolean isGraphical(int[] degreeSequence) {
-        if(check1(degreeSequence) == true && check2(degreeSequence) == true && haveliHakimi(degreeSequence) == true) {
-            return true;
-        }
-        System.out.println("Degree sequence is not graphical");
-        return false;
-    }
-
-    // private boolean haveliHakimi(int[] degreeSequence) {   
-    //     while(check1(degreeSequence) == true && check2(degreeSequence) == true){
-    //         for(int i = 0; i < degreeSequence.length; i++){
-    //             Arrays.sort(degreeSequence);
-    //             for(int j = i + 1; j < degreeSequence[0])
-    //         }
-    //     }
-    //     System.out.println();
-    //     if()
+    //     System.out.println("Degree sequence is not graphical");
     //     return false;
     // }
 
-    private boolean check1(int[] degreeSequence) {
-        int total = 0;
-        for(int num: degreeSequence){
-            total += num;
-        }
-        if(degreeSequence.length % 2 != 0 && total % 2 != 0){
-            return false;
-        }
-        return true;
-    }
+    // // private boolean haveliHakimi(int[] degreeSequence) {   
+    // //     while(check1(degreeSequence) == true && check2(degreeSequence) == true){
+    // //         for(int i = 0; i < degreeSequence.length; i++){
+    // //             Arrays.sort(degreeSequence);
+    // //             for(int j = i + 1; j < degreeSequence[0])
+    // //         }
+    // //     }
+    // //     System.out.println();
+    // //     if()
+    // //     return false;
+    // // }
 
-    private boolean check2(int[] degreeSequence) {
-        Arrays.sort(degreeSequence);
-        if(degreeSequence[0] > degreeSequence.length) {
-            return false;
-        }
-        return true;
-    }
+    // private boolean check1(int[] degreeSequence) {
+    //     int total = 0;
+    //     for(int num: degreeSequence){
+    //         total += num;
+    //     }
+    //     if(degreeSequence.length % 2 != 0 && total % 2 != 0){
+    //         return false;
+    //     }
+    //     return true;
+    // }
+
+    // private boolean check2(int[] degreeSequence) {
+    //     Arrays.sort(degreeSequence);
+    //     if(degreeSequence[0] > degreeSequence.length) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     private void createVertex(CanvasWindow canvas, double degree) {
         Ellipse vertex = new Ellipse(canvasWidth / 2 - 15, canvasHeight / 2 - 115, 30, 30);
@@ -109,7 +116,22 @@ public class State {
     public static void main(String[] args) {
         CanvasWindow canvas = new CanvasWindow("State", 800, 600);
         State state = new State(canvas);
-        state.drawVertices(canvas, 10);
-        
+        state.drawVertices(canvas, 4);
+        // Graph<URI, DefaultEdge> g = new DefaultDirectedGraph<>(DefaultEdge.class);
+
+        // URI google = new URI("http://www.google.com");
+        // URI wikipedia = new URI("http://www.wikipedia.org");
+        // URI jgrapht = new URI("http://www.jgrapht.org");
+
+        // // add the vertices
+        // g.addVertex(google);
+        // g.addVertex(wikipedia);
+        // g.addVertex(jgrapht);
+
+        // // add edges to create linking structure
+        // g.addEdge(jgrapht, wikipedia);
+        // g.addEdge(google, jgrapht);
+        // g.addEdge(google, wikipedia);
+        // g.addEdge(wikipedia, google);
     }
 }

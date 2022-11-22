@@ -170,7 +170,6 @@ public class Graph {
 
     }
 
-
     /**
      * Returns the vertices adjacent to vertex {@code v}.
      *

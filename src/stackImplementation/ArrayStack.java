@@ -1,6 +1,5 @@
 package stackImplementation;
 
-import stackImplementation.StackADT;
 import stackImplementation.exceptions.*;
 
 import java.util.Arrays;

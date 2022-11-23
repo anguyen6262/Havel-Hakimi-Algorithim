@@ -68,6 +68,10 @@ public class MainWindow {
     }
 
     public static void main(String[] args) {
-        
+        // System.out.println(state.haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4))));
+    // for(Integer vertex: graph.vertexSet()) {
+    //     System.out.println(vertex.deg);
+    // }
+    // System.out.println(graph.vertexSet());
     }
 }

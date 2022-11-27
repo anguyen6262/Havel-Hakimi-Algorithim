@@ -15,23 +15,22 @@ import edu.macalester.graphics.GraphicsText;
 
 public class State {
     List<Color> colors= new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.PINK, Color.GRAY, Color.CYAN));
-    private MainWindow window = new MainWindow();
-    private int canvasHeight = window.getCanvasHeight();
-    private int canvasWidth = window.getCanvasWidth();
+    // private MainWindow window = new MainWindow();
+    // private int canvasHeight = window.getCanvasHeight();
+    // private int canvasWidth = window.getCanvasWidth();
     Map<Integer, Ellipse> verticesMap;
-    // Map<Integer, Line> edgesMap;
     ArrayList<Integer> degreeSequence;
     
 
-    public State(ArrayList<Integer> degreeSequence){
+    public State(CanvasWindow canvas, ArrayList<Integer> degreeSequence){
         verticesMap = new HashMap<>();
-        // edgesMap = new HashMap<>();
-        degreeSequence = this.degreeSequence;
+        this.degreeSequence = degreeSequence;
+        // run(canvas,degreeSequence);
     }
 
     private void drawVertices(CanvasWindow canvas, int numVertices) {
-        int xPos = canvasWidth/4;
-        double yPos = canvasHeight/2;
+        int xPos = 200;
+        double yPos = 300;
         for(Integer i = 0; i < numVertices; i++){
             Ellipse vertex = new Ellipse(xPos, yPos, 30, 30);
             vertex.setFillColor(Color.black);
@@ -78,12 +77,12 @@ public class State {
         drawText(canvas);
     }
 
-    public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("State", 800, 600);
-        State state = new State(new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        state.run(canvas, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        // state.run(canvas, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        // System.out.println(graph.toString());            
-    }   
+    // public static void main(String[] args) {
+    //     // CanvasWindow canvas = new CanvasWindow("State", 800, 600);
+    //     // State state = new State(new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
+    //     // state.run(canvas, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+    //     // state.run(canvas, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
+    //     // System.out.println(graph.toString());            
+    // }   
 }
 

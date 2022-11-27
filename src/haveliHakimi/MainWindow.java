@@ -19,14 +19,14 @@ public class MainWindow {
     public MainWindow(){
         canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         stateStack = new ArrayStack<>();
-        canvas.add(stateStack.peek().run(canvas));
+        haveliHakimi(canvas,new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
         // setupUI();
     }
 
-    private boolean haveliHakimi(ArrayList<Integer> degreeSequence) {   
+    private boolean haveliHakimi(CanvasWindow canvas, ArrayList<Integer> degreeSequence) {   
         if(firstTheorem(degreeSequence) == true && firstDegree(degreeSequence) == true){
             Collections.sort(degreeSequence, Collections.reverseOrder());
-            stateStack.push(new State(degreeSequence));
+            stateStack.push(new State(canvas, degreeSequence));
             System.out.println(degreeSequence);
                 for(int i = 0; i < degreeSequence.size(); i++){
                     Collections.sort(degreeSequence, Collections.reverseOrder());
@@ -36,7 +36,7 @@ public class MainWindow {
                     degreeSequence.remove(0);
                     Collections.sort(degreeSequence, Collections.reverseOrder());
                     System.out.println(degreeSequence);
-                    stateStack.push(new State(degreeSequence));
+                    stateStack.push(new State(canvas,degreeSequence));
             }
             return true;
         }
@@ -91,7 +91,8 @@ public class MainWindow {
     // }
     public static void main(String[] args) {
         MainWindow window = new MainWindow();
-        canvas.add(stateStack.poll());
+        System.out.println(window.stateStack); 
+        // canvas.add(stateStack.poll());
         // System.out.println(window.haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4))));
     }
 }

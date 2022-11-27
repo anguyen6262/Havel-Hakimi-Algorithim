@@ -26,25 +26,23 @@ public class State {
         edgesMap = new HashMap<>();
     }
 
-    private void drawVertices(CanvasWindow canvas, int numVertices) {
-        int xPos = canvasWidth/4;
-        double yPos = canvasHeight/2;
-        for(Integer i = 0; i < numVertices; i++){
-            Ellipse vertex = new Ellipse(xPos, yPos, 30, 30);
+    private void drawVertices(CanvasWindow canvas, int intNumVertices) {
+        double radius = 100;
+        double numVertices = intNumVertices;
+        for (int i = 0; i < numVertices; i++) {
+            double theta = i / numVertices * 2 * Math.PI;
+            System.out.println(theta);
+            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + canvasWidth/2, radius * Math.sin(theta) + canvasHeight/2, 30, 30);
             vertex.setFillColor(Color.black);
             canvas.add(vertex);
             verticesMap.put(i, vertex);
-            xPos+=70;
-            if(i % 2 ==1) {
-                yPos+=Math.ceil(Math.random()*150);
-            } else {
-                yPos-=Math.ceil(Math.random()*150);
-            }
-        }   
+            System.out.println(vertex.getX());
+            System.out.println(vertex.getY());
+            
+        }
     }
 
     private void drawEdges(CanvasWindow canvas, Graph graph, ArrayList<Integer> degreeSequence) {
-        System.out.println(degreeSequence);
         Map<Integer, Integer> savingDegrees = new HashMap<Integer, Integer>();
         List<Integer> markedVertices = new ArrayList<>();
         while (Collections.max(degreeSequence) > 0) {
@@ -65,8 +63,6 @@ public class State {
                 degreeSequence.set(location, savingDegrees.get(location));
             }
             markedVertices.clear();
-
-            System.out.println(degreeSequence);
         }
     }
             

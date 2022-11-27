@@ -3,15 +3,24 @@ package haveliHakimi;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
+import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.ui.Button;
 import stackImplementation.ArrayStack;
 
 public class MainWindow {
     private static final int CANVAS_WIDTH = 800;
     private static final int CANVAS_HEIGHT = 600;
     private ArrayStack<State> stateStack;
+    // private Button nextButton;
+    // private Button previousButton;
+    private CanvasWindow canvas;
     
     public MainWindow(){
+        canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         stateStack = new ArrayStack<>();
+        canvas.add(stateStack.peek().run(canvas));
+        // setupUI();
     }
 
     private boolean haveliHakimi(ArrayList<Integer> degreeSequence) {   
@@ -64,8 +73,25 @@ public class MainWindow {
         return CANVAS_HEIGHT;
     }
 
+    // private void setupUI() {
+    //     nextButton = new Button("Next");
+    //     nextButton.onClick(() -> nextState());
+    //     previousButton = new Button("Previous");
+    //     previousButton.onClick(()->previousState());
+    // }
+
+    // private void nextState(CanvasWindow canvas){
+    //     canvas.remove();
+    //     canvas.add(stateStack.pop());
+        
+    // } 
+    
+    // private void previousState(){
+
+    // }
     public static void main(String[] args) {
         MainWindow window = new MainWindow();
-        System.out.println(window.haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4))));
+        canvas.add(stateStack.poll());
+        // System.out.println(window.haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4))));
     }
 }

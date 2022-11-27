@@ -19,11 +19,14 @@ public class State {
     private int canvasHeight = window.getCanvasHeight();
     private int canvasWidth = window.getCanvasWidth();
     Map<Integer, Ellipse> verticesMap;
-    Map<Integer, Line> edgesMap;
+    // Map<Integer, Line> edgesMap;
+    ArrayList<Integer> degreeSequence;
+    
 
     public State(ArrayList<Integer> degreeSequence){
         verticesMap = new HashMap<>();
-        edgesMap = new HashMap<>();
+        // edgesMap = new HashMap<>();
+        degreeSequence = this.degreeSequence;
     }
 
     private void drawVertices(CanvasWindow canvas, int numVertices) {
@@ -68,8 +71,9 @@ public class State {
         }
     }
 
-    private void run(CanvasWindow canvas, int numVertices, Graph graph, ArrayList<Integer> degreeSequence ){
-        drawVertices(canvas, numVertices);
+    private void run(CanvasWindow canvas, ArrayList<Integer> degreeSequence ){
+        Graph graph = new Graph(degreeSequence.size());
+        drawVertices(canvas, degreeSequence.size());
         drawEdges(canvas, graph, degreeSequence);
         drawText(canvas);
     }
@@ -77,10 +81,9 @@ public class State {
     public static void main(String[] args) {
         CanvasWindow canvas = new CanvasWindow("State", 800, 600);
         State state = new State(new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        Graph graph = new Graph(6);
-        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        System.out.println(graph.toString());            
+        state.run(canvas, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        // state.run(canvas, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
+        // System.out.println(graph.toString());            
     }   
 }
 

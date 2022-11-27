@@ -21,11 +21,9 @@ public class State {
     Map<Integer, Ellipse> verticesMap;
     ArrayList<Integer> degreeSequence;
     
-
-    public State(CanvasWindow canvas, ArrayList<Integer> degreeSequence){
+    public State(ArrayList<Integer> degreeSequence){
         verticesMap = new HashMap<>();
         this.degreeSequence = degreeSequence;
-        // run(canvas,degreeSequence);
     }
 
     private void drawVertices(CanvasWindow canvas, int numVertices) {
@@ -70,10 +68,10 @@ public class State {
         }
     }
 
-    private void run(CanvasWindow canvas, ArrayList<Integer> degreeSequence ){
-        Graph graph = new Graph(degreeSequence.size());
-        drawVertices(canvas, degreeSequence.size());
-        drawEdges(canvas, graph, degreeSequence);
+    public void run(CanvasWindow canvas){
+        Graph graph = new Graph(this.degreeSequence.size());
+        drawVertices(canvas, this.degreeSequence.size());
+        drawEdges(canvas, graph, this.degreeSequence);
         drawText(canvas);
     }
 

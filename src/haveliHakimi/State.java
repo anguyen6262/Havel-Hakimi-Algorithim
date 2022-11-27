@@ -44,20 +44,33 @@ public class State {
     }
 
     private void drawEdges(CanvasWindow canvas, Graph graph, ArrayList<Integer> degreeSequence) {
-        Collections.sort(degreeSequence, Collections.reverseOrder());
-        for(int i = 0; i < degreeSequence.size() - 1; i++){
-            for(int j = 1; j < degreeSequence.size(); j++){
-                if(degreeSequence.get(i) > graph.degree(i)){
-                    if(degreeSequence.get(j) > graph.degree(j) && j != i) {
-                        graph.addEdge(i, j);    
-                        Line edge = new Line(verticesMap.get(i).getCenter(), verticesMap.get(j).getCenter());
-                        canvas.add(edge);
-                    }
-                }
+        System.out.println(degreeSequence);
+        Map<Integer, Integer> savingDegrees = new HashMap<Integer, Integer>();
+        List<Integer> markedVertices = new ArrayList<>();
+        while (Collections.max(degreeSequence) > 0) {
+            int maximum = Collections.max(degreeSequence);
+            int maxLocation = degreeSequence.indexOf(maximum);
+            degreeSequence.set(maxLocation, 0);
+            for (int i = 0; i < maximum; i++) {
+                int nextMax = Collections.max(degreeSequence);
+                int nextMaxLocation = degreeSequence.indexOf(nextMax);
+                markedVertices.add(nextMaxLocation);
+                savingDegrees.put(nextMaxLocation, nextMax - 1);
+                degreeSequence.set(nextMaxLocation, 0);
+                graph.addEdge(maxLocation, nextMaxLocation);
+                Line edge = new Line(verticesMap.get(maxLocation).getCenter(), verticesMap.get(nextMaxLocation).getCenter());
+                canvas.add(edge);
             }
+            for (int location : markedVertices) {
+                degreeSequence.set(location, savingDegrees.get(location));
+            }
+            markedVertices.clear();
+
+            System.out.println(degreeSequence);
         }
     }
-    
+            
+
     private void drawText(CanvasWindow canvas) {
         for(int i = 0; i < verticesMap.size(); i++){
             verticesMap.get(i).getCenter().getX();
@@ -77,10 +90,11 @@ public class State {
     public static void main(String[] args) {
         CanvasWindow canvas = new CanvasWindow("State", 800, 600);
         State state = new State(new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        Graph graph = new Graph(6);
-        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        System.out.println(graph.toString());            
+        Graph graph = new Graph(7);
+        state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
+        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(3,3,3,3,2,2)));
+        //System.out.println(graph.toString());            
     }   
 }
 

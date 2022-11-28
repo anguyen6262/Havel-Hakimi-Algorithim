@@ -15,8 +15,10 @@ public class MainWindow {
     private Button nextButton;
     // private Button previousButton;
     private CanvasWindow canvas;
+    private ArrayList<State> stateArray;
     
     public MainWindow(){
+        stateArray = new ArrayList<>();
         canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         stateStack = new ArrayStack<>();
         haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
@@ -26,8 +28,11 @@ public class MainWindow {
     private boolean haveliHakimi(ArrayList<Integer> degreeSequence) {   
         if(firstTheorem(degreeSequence) == true && firstDegree(degreeSequence) == true){
             Collections.sort(degreeSequence, Collections.reverseOrder());
-            stateStack.push(new State(degreeSequence));
             // System.out.println(degreeSequence);
+            // State state = new State(degreeSequence);
+            // stateStack.push(state);
+            // System.out.println(state.degreeSequence);
+            stateArray.add(new State(degreeSequence));
                 for(int i = 0; i < degreeSequence.size(); i++){
                     // Collections.sort(degreeSequence, Collections.reverseOrder());
                     for(int j = 1; j <= degreeSequence.get(0); j++) {
@@ -36,7 +41,10 @@ public class MainWindow {
                     degreeSequence.remove(0);
                     Collections.sort(degreeSequence, Collections.reverseOrder());
                     // System.out.println(degreeSequence);
-                    stateStack.push(new State(degreeSequence));
+                    // State state2 = new State(degreeSequence);
+                    // stateStack.push(state2);
+                    // System.out.println(state2.degreeSequence); 
+                    stateArray.add(new State(degreeSequence));
             }
             return true;
         }
@@ -82,13 +90,8 @@ public class MainWindow {
     }
 
     private void nextState(CanvasWindow canvas){
-        State nextState = stateStack.pop(); 
-        System.out.println(nextState.degreeSequence);
-        for(int i = 0; i <stateStack.size() ; i++){
-            System.out.println("left" + stateStack.toString());
-        }
         
-        nextState.run(canvas);
+               
     } 
     
     // private void previousState(){
@@ -97,12 +100,14 @@ public class MainWindow {
     public static void main(String[] args) {
         // CanvasWindow canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         MainWindow window = new MainWindow();
-        System.out.println(window.stateStack.toString());
-        
-        for(int i = 0; i < window.stateStack.size(); i++){
-            System.out.println("Actul "+window.stateStack.pop().degreeSequence);   
+        for(State state: window.stateArray){
+            System.out.println(state.degreeSequence);
         }
         
+        // for(int i = 0; i < window.stateStack.size(); i++){
+        //     window.testArray.add(window.stateStack.pop().degreeSequence); 
+        // }
+        // System.out.println(window.testArray);
         // window.stateStack.pop().run(canvas);
         // canvas.add(stateStack.poll());
         // System.out.println(window.haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4))));

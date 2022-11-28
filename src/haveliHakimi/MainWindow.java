@@ -28,7 +28,7 @@ public class MainWindow {
     private boolean haveliHakimi(ArrayList<Integer> degreeSequence) {   
         if(firstTheorem(degreeSequence) == true && firstDegree(degreeSequence) == true){
             Collections.sort(degreeSequence, Collections.reverseOrder());
-            // System.out.println(degreeSequence);
+            System.out.println(degreeSequence);
             // State state = new State(degreeSequence);
             // stateStack.push(state);
             // System.out.println(state.degreeSequence);
@@ -40,7 +40,7 @@ public class MainWindow {
                     }
                     degreeSequence.remove(0);
                     Collections.sort(degreeSequence, Collections.reverseOrder());
-                    // System.out.println(degreeSequence);
+                    System.out.println(degreeSequence);
                     // State state2 = new State(degreeSequence);
                     // stateStack.push(state2);
                     // System.out.println(state2.degreeSequence); 

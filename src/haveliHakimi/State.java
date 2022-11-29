@@ -29,7 +29,7 @@ public class State {
         for (int i = 0; i < numVertices; i++) {
             double theta = i / numVertices * 2 * Math.PI;
             // System.out.println(theta);
-            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 385, radius * Math.sin(theta) + 300, 30, 30);
+            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 385, radius * Math.sin(theta) + 285, 30, 30);
             vertex.setFillColor(Color.black);
             canvas.add(vertex);
             verticesMap.put(i, vertex);

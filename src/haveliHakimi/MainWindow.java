@@ -8,6 +8,7 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Point;
+import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
 import stackImplementation.ArrayStack;
 
@@ -19,8 +20,10 @@ public class MainWindow {
     private Button nextButton;
     private Button previousButton;
     private CanvasWindow canvas;
-    private Line middle;
+    private Line xMiddle;
+    private Line yMiddle;
     private GraphicsText title;
+    private Rectangle frame;
     // private ArrayList<State> stateArray;
     // private int currentState;
     
@@ -38,11 +41,12 @@ public class MainWindow {
         if(firstTheorem(degreeSequence) == true && firstDegree(degreeSequence) == true){
 
             Collections.sort(degreeSequence, Collections.reverseOrder());
-            System.out.println(degreeSequence);
+            // System.out.println(degreeSequence);
             // State state = new State(degreeSequence);
             // stateStack.push(state);
             // System.out.println(state.degreeSequence);
             nextStack.push(new State(degreeSequence));
+            // stateArray.add(new State(degreeSequence));
                 for(int i = 0; i < degreeSequence.size(); i++){
                     ArrayList<Integer> tempArr = new ArrayList<>();
                     // Collections.sort(degreeSequence, Collections.reverseOrder());
@@ -53,11 +57,12 @@ public class MainWindow {
                         tempArr.add(degreeSequence.get(k));
                     }
                     Collections.sort(tempArr, Collections.reverseOrder());
-                    System.out.println(tempArr);
+                    // System.out.println(tempArr);
                     // State state2 = new State(degreeSequence);
                     // stateStack.push(state2);
                     // System.out.println(state2.degreeSequence); 
                     nextStack.push(new State(tempArr));
+                    // stateArray.add(new State(tempArr));
                     degreeSequence=tempArr;
             }
             return true;
@@ -102,22 +107,33 @@ public class MainWindow {
         previousButton = new Button("Previous");
         previousButton.onClick(()->previousState());
         canvas.add(previousButton, 420, 500);
-        middle = new Line(new Point(400,0), new Point(400,600));
-        canvas.add(middle);
+        // yMiddle = new Line(new Point(400,0), new Point(400,600));
+        // canvas.add(yMiddle);
+        // xMiddle = new Line(new Point(0,300), new Point(800,300));
+        // canvas.add(xMiddle);
         title = new GraphicsText("Havel-Hakimi Algorithm", 140,100);
         title.setFontSize(50);
         canvas.add(title);
+        frame = new Rectangle(CANVAS_WIDTH/4, CANVAS_HEIGHT/4,CANVAS_WIDTH/2 ,CANVAS_HEIGHT/2);
+        frame.setStrokeWidth(5);
+        canvas.add(frame);
     }
 
     private void removeGraph() {
         canvas.removeAll();
         canvas.add(nextButton);
         canvas.add(previousButton);
-        canvas.add(middle);
+        // canvas.add(yMiddle);
+        // canvas.add(xMiddle);
+        canvas.add(frame);
+        canvas.add(title);
     }
 
     private void nextState(){
         removeGraph();
+        // currentState++;
+        // stateArray.get(currentState).run(canvas);
+        // System.out.println(stateArray.get(currentState).degreeSequence);
         State nextState = nextStack.pop();
         previousStack.push(nextState);
         nextState.run(canvas);
@@ -133,24 +149,24 @@ public class MainWindow {
 
     private void previousState(){
         removeGraph();
+        // currentState--;
+        // stateArray.get(currentState).run(canvas);
+        // System.out.println(stateArray.get(currentState).degreeSequence);
         State previousState = previousStack.pop();
         nextStack.push(previousState);
         previousState.run(canvas);
         System.out.println(previousState.degreeSequence);
     }
 
-
-
     public static void main(String[] args) {
         // CanvasWindow canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         MainWindow window = new MainWindow();
+        // System.out.println(window.stateArray);
         // for(State state: window.stateArray){
         //     System.out.println("test"+state.degreeSequence);
         // }
         
-        // for(int i = 0; i < window.stateStack.size(); i++){
-        //     window.testArray.add(window.stateStack.pop().degreeSequence); 
-        // }
+        
         // System.out.println(window.testArray);
         // window.stateStack.pop().run(canvas);
         // canvas.add(stateStack.poll());

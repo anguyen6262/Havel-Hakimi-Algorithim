@@ -19,11 +19,13 @@ public class MainWindow {
     private ArrayStack<State> previousStack;
     private Button nextButton;
     private Button previousButton;
+    private Button exitButton;
     private CanvasWindow canvas;
-    private Line xMiddle;
-    private Line yMiddle;
+    // private Line xMiddle;
+    // private Line yMiddle;
     private GraphicsText title;
     private Rectangle frame;
+    private GraphicsText notGraphicalText;
     // private ArrayList<State> stateArray;
     // private int currentState;
     
@@ -32,14 +34,14 @@ public class MainWindow {
         canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         nextStack = new ArrayStack<>();
         previousStack = new ArrayStack<>();
-        haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        // haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        haveliHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
         setupUI();
         // currentState = 0;
     }
 
-    private boolean haveliHakimi(ArrayList<Integer> degreeSequence) {   
+    private void haveliHakimi(ArrayList<Integer> degreeSequence) {   
         if(firstTheorem(degreeSequence) == true && firstDegree(degreeSequence) == true){
-
             Collections.sort(degreeSequence, Collections.reverseOrder());
             // System.out.println(degreeSequence);
             // State state = new State(degreeSequence);
@@ -65,10 +67,12 @@ public class MainWindow {
                     // stateArray.add(new State(tempArr));
                     degreeSequence=tempArr;
             }
-            return true;
+        } else{
+            notGraphicalText = new GraphicsText("Degree Sequence Is Not Graphical");
+            notGraphicalText.setFontSize(20);
+            canvas.add(notGraphicalText,250,300);
         }
-        System.out.println("Degree sequence is not graphical"); 
-        return false;
+        
     }
 
     private boolean firstTheorem(ArrayList<Integer> degreeSequence) {
@@ -107,6 +111,9 @@ public class MainWindow {
         previousButton = new Button("Previous");
         previousButton.onClick(()->previousState());
         canvas.add(previousButton, 420, 500);
+        exitButton = new Button("Exit");
+        exitButton.onClick(() -> canvas.closeWindow());
+        canvas.add(exitButton, 370, 540);
         // yMiddle = new Line(new Point(400,0), new Point(400,600));
         // canvas.add(yMiddle);
         // xMiddle = new Line(new Point(0,300), new Point(800,300));
@@ -127,6 +134,7 @@ public class MainWindow {
         // canvas.add(xMiddle);
         canvas.add(frame);
         canvas.add(title);
+        canvas.add(exitButton);
     }
 
     private void nextState(){

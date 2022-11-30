@@ -3,6 +3,7 @@ package haveliHakimi;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
@@ -26,32 +27,33 @@ public class MainWindow {
     private GraphicsText title;
     private Rectangle frame;
     private GraphicsText notGraphicalText;
-    // private ArrayList<State> stateArray;
-    // private int currentState;
+    private ArrayList<State> stateArray;
+    // private Iterator<State> stateIterator;
+    private int currentState;
     
     public MainWindow(){
         // stateArray = new ArrayList<>();
+        // stateIterator = stateArray.iterator();
         canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         nextStack = new ArrayStack<>();
         previousStack = new ArrayStack<>();
-        // haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        haveliHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
+        haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        // haveliHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
         setupUI();
-        // currentState = 0;
+        for(State state: stateArray){
+            System.out.println(state.degreeSequence);
+        }
+        // currentState = -1;
     }
 
     private void haveliHakimi(ArrayList<Integer> degreeSequence) {   
         if(firstTheorem(degreeSequence) == true && firstDegree(degreeSequence) == true){
             Collections.sort(degreeSequence, Collections.reverseOrder());
-            // System.out.println(degreeSequence);
-            // State state = new State(degreeSequence);
-            // stateStack.push(state);
             // System.out.println(state.degreeSequence);
             nextStack.push(new State(degreeSequence));
             // stateArray.add(new State(degreeSequence));
                 for(int i = 0; i < degreeSequence.size(); i++){
                     ArrayList<Integer> tempArr = new ArrayList<>();
-                    // Collections.sort(degreeSequence, Collections.reverseOrder());
                     for(int j = 1; j <= degreeSequence.get(0); j++) {
                         tempArr.add(degreeSequence.get(j) - 1);
                     }
@@ -60,9 +62,6 @@ public class MainWindow {
                     }
                     Collections.sort(tempArr, Collections.reverseOrder());
                     // System.out.println(tempArr);
-                    // State state2 = new State(degreeSequence);
-                    // stateStack.push(state2);
-                    // System.out.println(state2.degreeSequence); 
                     nextStack.push(new State(tempArr));
                     // stateArray.add(new State(tempArr));
                     degreeSequence=tempArr;
@@ -169,6 +168,7 @@ public class MainWindow {
     public static void main(String[] args) {
         // CanvasWindow canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         MainWindow window = new MainWindow();
+        
         // System.out.println(window.stateArray);
         // for(State state: window.stateArray){
         //     System.out.println("test"+state.degreeSequence);

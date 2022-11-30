@@ -1,4 +1,4 @@
-package haveliHakimi;
+package havelHakimi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,25 +29,26 @@ public class MainWindow {
     private GraphicsText notGraphicalText;
     private ArrayList<State> stateArray;
     // private Iterator<State> stateIterator;
-    private int currentState;
+    private ArrayList<Integer> emptyDegSeq;
+    private State currentState;
     
     public MainWindow(){
         // stateArray = new ArrayList<>();
         // stateIterator = stateArray.iterator();
-        canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         nextStack = new ArrayStack<>();
         previousStack = new ArrayStack<>();
-        haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        // haveliHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
+        havelHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        // havelHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
         setupUI();
-        for(State state: stateArray){
-            System.out.println(state.degreeSequence);
-        }
+        // for(State state: stateArray){
+            // System.out.println(state.degreeSequence);
+        // }
         // currentState = -1;
     }
 
-    private void haveliHakimi(ArrayList<Integer> degreeSequence) {   
-        if(firstTheorem(degreeSequence) == true && firstDegree(degreeSequence) == true){
+    private void havelHakimi(ArrayList<Integer> degreeSequence) {   
+        if(firstTheorem(degreeSequence) && firstDegree(degreeSequence)){
             Collections.sort(degreeSequence, Collections.reverseOrder());
             // System.out.println(state.degreeSequence);
             nextStack.push(new State(degreeSequence));
@@ -66,6 +67,11 @@ public class MainWindow {
                     // stateArray.add(new State(tempArr));
                     degreeSequence=tempArr;
             }
+            emptyDegSeq = new ArrayList<Integer>();
+            for (int i = 0; i < degreeSequence.size(); i++) {
+                emptyDegSeq.add(0);
+            }
+            currentState = new State(emptyDegSeq);
         } else{
             notGraphicalText = new GraphicsText("Degree Sequence Is Not Graphical");
             notGraphicalText.setFontSize(20);
@@ -105,10 +111,10 @@ public class MainWindow {
 
     private void setupUI() {
         nextButton = new Button("Next");
-        nextButton.onClick(() -> nextState());
+        nextButton.onClick(() -> goToNextState());
         canvas.add(nextButton, 320, 500);
         previousButton = new Button("Previous");
-        previousButton.onClick(()->previousState());
+        previousButton.onClick(()->goToPreviousState());
         canvas.add(previousButton, 420, 500);
         exitButton = new Button("Exit");
         exitButton.onClick(() -> canvas.closeWindow());
@@ -136,15 +142,23 @@ public class MainWindow {
         canvas.add(exitButton);
     }
 
-    private void nextState(){
-        removeGraph();
+    private void goToNextState(){
+        if(!nextStack.isEmpty()){
+            removeGraph();
+        }
+        if (nextStack.size() == 1) {
+            canvas.remove(nextButton);
+        }
+        
         // currentState++;
         // stateArray.get(currentState).run(canvas);
         // System.out.println(stateArray.get(currentState).degreeSequence);
         State nextState = nextStack.pop();
-        previousStack.push(nextState);
-        nextState.run(canvas);
         System.out.println(nextState.degreeSequence);
+        previousStack.push(nextState);
+        System.out.println(previousButton);
+        nextState.run(canvas);
+        // System.out.println(nextState.degreeSequence);
     } 
     
     // private void handleState(ArrayStack<State> popStack, ArrayStack<State> pushStack){
@@ -154,19 +168,24 @@ public class MainWindow {
     //     removeGraph();
     // }
 
-    private void previousState(){
-        removeGraph();
+    private void goToPreviousState(){
+        if (!previousStack.isEmpty()) {
+            removeGraph();
+        }
+        if (previousStack.size() == 1) {
+            canvas.remove(previousButton);
+        }
         // currentState--;
         // stateArray.get(currentState).run(canvas);
         // System.out.println(stateArray.get(currentState).degreeSequence);
         State previousState = previousStack.pop();
         nextStack.push(previousState);
         previousState.run(canvas);
-        System.out.println(previousState.degreeSequence);
+        // System.out.println(previousState.degreeSequence);
     }
 
     public static void main(String[] args) {
-        // CanvasWindow canvas = new CanvasWindow("Haveli Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
+        // CanvasWindow canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         MainWindow window = new MainWindow();
         
         // System.out.println(window.stateArray);
@@ -178,6 +197,6 @@ public class MainWindow {
         // System.out.println(window.testArray);
         // window.stateStack.pop().run(canvas);
         // canvas.add(stateStack.poll());
-        // System.out.println(window.haveliHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4))));
+        // System.out.println(window.havelHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4))));
     }
 }

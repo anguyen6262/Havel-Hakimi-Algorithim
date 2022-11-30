@@ -1,4 +1,4 @@
-package haveliHakimi;
+package havelHakimi;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package haveliHakimi;
+package havelHakimi;
 
 import java.awt.Color;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package haveliHakimi;
+package havelHakimi;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -15,15 +15,12 @@ import edu.macalester.graphics.GraphicsText;
 
 public class State {
     List<Color> colors= new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.PINK, Color.GRAY, Color.CYAN));
-    private MainWindow window = new MainWindow();
-    private int canvasHeight = window.getCanvasHeight();
-    private int canvasWidth = window.getCanvasWidth();
     Map<Integer, Ellipse> verticesMap;
-    Map<Integer, Line> edgesMap;
-
+    ArrayList<Integer> degreeSequence;
+    
     public State(ArrayList<Integer> degreeSequence){
         verticesMap = new HashMap<>();
-        edgesMap = new HashMap<>();
+        this.degreeSequence = degreeSequence;
     }
 
     private void drawVertices(CanvasWindow canvas, int intNumVertices) {
@@ -31,45 +28,43 @@ public class State {
         double numVertices = intNumVertices;
         for (int i = 0; i < numVertices; i++) {
             double theta = i / numVertices * 2 * Math.PI;
-            System.out.println(theta);
-            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + canvasWidth/2, radius * Math.sin(theta) + canvasHeight/2, 30, 30);
+            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 500, radius * Math.sin(theta) + 285, 30, 30);
             vertex.setFillColor(Color.black);
             canvas.add(vertex);
             verticesMap.put(i, vertex);
-            System.out.println(vertex.getX());
-            System.out.println(vertex.getY());
-            
         }
     }
 
     private void drawEdges(CanvasWindow canvas, Graph graph, ArrayList<Integer> degreeSequence) {
+        List<Integer> degreeSequenceCopy = new ArrayList<Integer>();
+        for (Integer x : degreeSequence) {
+            degreeSequenceCopy.add(x);
+        }
         Map<Integer, Integer> savingDegrees = new HashMap<Integer, Integer>();
         List<Integer> markedVertices = new ArrayList<>();
-        while (Collections.max(degreeSequence) > 0) {
-            int maximum = Collections.max(degreeSequence);
-            int maxLocation = degreeSequence.indexOf(maximum);
-            degreeSequence.set(maxLocation, 0);
+        while (Collections.max(degreeSequenceCopy) > 0) {
+            int maximum = Collections.max(degreeSequenceCopy);
+            int maxLocation = degreeSequenceCopy.indexOf(maximum);
+            degreeSequenceCopy.set(maxLocation, 0);
             for (int i = 0; i < maximum; i++) {
-                int nextMax = Collections.max(degreeSequence);
-                int nextMaxLocation = degreeSequence.indexOf(nextMax);
+                int nextMax = Collections.max(degreeSequenceCopy);
+                int nextMaxLocation = degreeSequenceCopy.indexOf(nextMax);
                 markedVertices.add(nextMaxLocation);
                 savingDegrees.put(nextMaxLocation, nextMax - 1);
-                degreeSequence.set(nextMaxLocation, 0);
+                degreeSequenceCopy.set(nextMaxLocation, 0);
                 graph.addEdge(maxLocation, nextMaxLocation);
                 Line edge = new Line(verticesMap.get(maxLocation).getCenter(), verticesMap.get(nextMaxLocation).getCenter());
                 canvas.add(edge);
             }
             for (int location : markedVertices) {
-                degreeSequence.set(location, savingDegrees.get(location));
+                degreeSequenceCopy.set(location, savingDegrees.get(location));
             }
             markedVertices.clear();
         }
     }
-            
-
+ 
     private void drawText(CanvasWindow canvas) {
         for(int i = 0; i < verticesMap.size(); i++){
-            verticesMap.get(i).getCenter().getX();
             Integer num = i;
             GraphicsText text = new GraphicsText(num.toString(), verticesMap.get(i).getCenter().getX()-4, verticesMap.get(i).getCenter().getY()+4);
             text.setFillColor(colors.get(i));
@@ -77,20 +72,14 @@ public class State {
         }
     }
 
-    private void run(CanvasWindow canvas, int numVertices, Graph graph, ArrayList<Integer> degreeSequence ){
-        drawVertices(canvas, numVertices);
-        drawEdges(canvas, graph, degreeSequence);
+    public void run(CanvasWindow canvas){
+        Graph graph = new Graph(this.degreeSequence.size());
+        drawVertices(canvas, this.degreeSequence.size());
+        drawEdges(canvas, graph, this.degreeSequence);
         drawText(canvas);
+    }    
+    
+    public String toString(){
+        return degreeSequence.toString();
     }
-
-    public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("State", 800, 600);
-        State state = new State(new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        Graph graph = new Graph(7);
-        state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(3,3,3,3,2,2)));
-        //System.out.println(graph.toString());            
-    }   
 }
-

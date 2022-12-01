@@ -28,7 +28,7 @@ public class State {
         double numVertices = intNumVertices;
         for (int i = 0; i < numVertices; i++) {
             double theta = i / numVertices * 2 * Math.PI;
-            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 500, radius * Math.sin(theta) + 285, 30, 30);
+            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 535, radius * Math.sin(theta) + 322.5, 30, 30);
             vertex.setFillColor(Color.black);
             canvas.add(vertex);
             verticesMap.put(i, vertex);
@@ -67,7 +67,7 @@ public class State {
         for(int i = 0; i < verticesMap.size(); i++){
             Integer num = i;
             GraphicsText text = new GraphicsText(num.toString(), verticesMap.get(i).getCenter().getX()-4, verticesMap.get(i).getCenter().getY()+4);
-            text.setFillColor(colors.get(i));
+            text.setFillColor(colors.get(i%7));
             canvas.add(text);
         }
     }

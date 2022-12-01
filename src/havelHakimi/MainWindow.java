@@ -2,7 +2,6 @@ package havelHakimi;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import edu.macalester.graphics.CanvasWindow;
@@ -11,6 +10,7 @@ import edu.macalester.graphics.Line;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
+import edu.macalester.graphics.ui.TextField;
 import stackImplementation.ArrayStack;
 
 public class MainWindow {
@@ -21,6 +21,7 @@ public class MainWindow {
     private Button nextButton;
     private Button previousButton;
     private Button exitButton;
+    private Button enterButton;
     private CanvasWindow canvas;
     private Line xMiddle;
     private Line yMiddle;
@@ -30,6 +31,8 @@ public class MainWindow {
     private Rectangle titleFrame;
     private GraphicsText notGraphicalText;
     private State currentState;
+    private TextField inputField;
+    ArrayList<Integer> inputArrayList;
     
     public MainWindow(){
         canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -41,10 +44,7 @@ public class MainWindow {
         // havelHakimi(new ArrayList<>(Arrays.asList(2,2,2,1)));
         // havelHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
         // havelHakimi(new ArrayList<>(Arrays.asList(4,3,2,1,0)));
-        if(havelHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)))){
-            currentState = nextStack.pop();
-            currentState.run(canvas);
-        }
+        
     }
 
     private boolean havelHakimi(ArrayList<Integer> degreeSequence) {   
@@ -62,21 +62,22 @@ public class MainWindow {
                 Collections.sort(tempArr, Collections.reverseOrder());
                 nextStack.push(new State(tempArr));
                 degreeSequence=tempArr;
-                System.out.println(degreeSequence.toString()); 
                 if(isSumZero(degreeSequence)){
                     return true;
                 }
                 if(isNegative(degreeSequence)){
-                    canvas.add(notGraphicalText,250,300);
+                    canvas.add(notGraphicalText,400,335);
                     canvas.remove(nextButton);
+                    canvas.remove(previousButton);
                     return false;
                 }
             }
             return true;
         } 
         else {
-            canvas.add(notGraphicalText,250,300);
+            canvas.add(notGraphicalText,400,335);
             canvas.remove(nextButton);
+            canvas.remove(previousButton);
         }    
         return false; 
     }
@@ -127,17 +128,18 @@ public class MainWindow {
         notGraphicalText.setFontSize(20);
         nextButton = new Button("Next");
         nextButton.onClick(() -> goToNextState());
-        canvas.add(nextButton, 320, 500);
+        enterButton = new Button("Enter");
+        canvas.add(enterButton, 610, 500);
+        enterButton.onClick(() -> enterDegreeSequence());
         previousButton = new Button("Previous");
         previousButton.onClick(()->goToPreviousState());
-        // canvas.add(previousButton, 420, 500);
         exitButton = new Button("Exit");
         exitButton.onClick(() -> canvas.closeWindow());
-        canvas.add(exitButton, 370, 540);
-        yMiddle = new Line(new Point(400,0), new Point(400,600));
+        canvas.add(exitButton, 672, 500);
+        yMiddle = new Line(new Point(550,0), new Point(550,600));
         yMiddle.setStrokeColor(Color.gray);
         canvas.add(yMiddle);
-        xMiddle = new Line(new Point(0,300), new Point(800,300));
+        xMiddle = new Line(new Point(0,337.5), new Point(800,337.5));
         xMiddle.setStrokeColor(Color.gray);
         canvas.add(xMiddle);
         title = new GraphicsText("Havel-Hakimi Algorithm", 140,55);
@@ -152,14 +154,20 @@ public class MainWindow {
         graphFrame = new Rectangle(300, 75,500 ,CANVAS_HEIGHT-75);
         graphFrame.setStrokeWidth(4);
         canvas.add(graphFrame);
+        inputField = new TextField();
+        canvas.add(inputField,510,500);
     }
 
     private void removeGraph() {
         canvas.removeAll();
-        canvas.add(nextButton);
-        canvas.add(previousButton,420, 500);
-        // canvas.add(yMiddle);
-        // canvas.add(xMiddle);
+        canvas.add(xMiddle);
+        canvas.add(yMiddle);
+        canvas.add(yMiddle);
+        canvas.add(xMiddle);
+        canvas.add(previousButton,370, 500);
+        canvas.add(nextButton, 450, 500);
+        canvas.add(enterButton);
+        canvas.add(inputField);
         canvas.add(infoFrame);
         canvas.add(graphFrame);
         canvas.add(titleFrame);
@@ -191,7 +199,35 @@ public class MainWindow {
         }
     }
 
+
+    private void clearStack(ArrayStack<State> stack){
+        for(int i = 0; i < stack.size(); i++){
+            stack.pop();
+        }
+    }
+
+    private void enterDegreeSequence() {
+        removeGraph();
+        // if(canvas.getElementAt(380, 510) != null) {
+        //     canvas.remove(previousButton);
+        // }
+        // clearStack(nextStack);
+        // clearStack(previousStack);
+        inputArrayList = new ArrayList<>();
+        String[] textArr = inputField.getText().split(",");
+        for(String num: textArr) {
+            inputArrayList.add(Integer.parseInt(num)); 
+        }
+        if(havelHakimi(inputArrayList)){
+            currentState = nextStack.pop();
+            currentState.run(canvas);
+        }
+        canvas.remove(previousButton);
+        inputField.setText("");
+    }
+
     public static void main(String[] args) {
         MainWindow window = new MainWindow();
+      
     }
 }

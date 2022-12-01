@@ -116,7 +116,7 @@ public class MainWindow {
 
     private boolean firstDegree(ArrayList<Integer> degreeSequence) {
         Collections.sort(degreeSequence);
-        if(degreeSequence.get(0) > degreeSequence.size()) {
+        if(degreeSequence.get(0) >= degreeSequence.size()) {
             System.out.println("First vertex has a higher degree than the order of the graph");
             return false;
         }
@@ -136,12 +136,12 @@ public class MainWindow {
         exitButton = new Button("Exit");
         exitButton.onClick(() -> canvas.closeWindow());
         canvas.add(exitButton, 672, 500);
-        yMiddle = new Line(new Point(550,0), new Point(550,600));
-        yMiddle.setStrokeColor(Color.gray);
-        canvas.add(yMiddle);
-        xMiddle = new Line(new Point(0,337.5), new Point(800,337.5));
-        xMiddle.setStrokeColor(Color.gray);
-        canvas.add(xMiddle);
+        // yMiddle = new Line(new Point(550,0), new Point(550,600));
+        // yMiddle.setStrokeColor(Color.gray);
+        // canvas.add(yMiddle);
+        // xMiddle = new Line(new Point(0,337.5), new Point(800,337.5));
+        // xMiddle.setStrokeColor(Color.gray);
+        // canvas.add(xMiddle);
         title = new GraphicsText("Havel-Hakimi Algorithm", 140,55);
         title.setFontSize(50);
         canvas.add(title);
@@ -160,10 +160,10 @@ public class MainWindow {
 
     private void removeGraph() {
         canvas.removeAll();
-        canvas.add(xMiddle);
-        canvas.add(yMiddle);
-        canvas.add(yMiddle);
-        canvas.add(xMiddle);
+        // canvas.add(xMiddle);
+        // canvas.add(yMiddle);
+        // canvas.add(yMiddle);
+        // canvas.add(xMiddle);
         canvas.add(previousButton,370, 500);
         canvas.add(nextButton, 450, 500);
         canvas.add(enterButton);
@@ -207,23 +207,26 @@ public class MainWindow {
     }
 
     private void enterDegreeSequence() {
-        removeGraph();
-        // if(canvas.getElementAt(380, 510) != null) {
-        //     canvas.remove(previousButton);
-        // }
-        // clearStack(nextStack);
-        // clearStack(previousStack);
-        inputArrayList = new ArrayList<>();
-        String[] textArr = inputField.getText().split(",");
-        for(String num: textArr) {
-            inputArrayList.add(Integer.parseInt(num)); 
-        }
-        if(havelHakimi(inputArrayList)){
-            currentState = nextStack.pop();
-            currentState.run(canvas);
-        }
-        canvas.remove(previousButton);
-        inputField.setText("");
+        if(!inputField.getText().equals("")) {
+            removeGraph();
+            // if(canvas.getElementAt(380, 510) != null) {
+            //     canvas.remove(previousButton);
+            // }
+            // clearStack(nextStack);
+            // clearStack(previousStack);
+            
+            inputArrayList = new ArrayList<>();
+            String[] textArr = inputField.getText().split(",");
+            for(String num: textArr) {
+                inputArrayList.add(Integer.parseInt(num)); 
+            }
+            if(havelHakimi(inputArrayList)){
+                currentState = nextStack.pop();
+                currentState.run(canvas);
+            }
+            // canvas.remove(previousButton);
+            inputField.setText("");
+        } 
     }
 
     public static void main(String[] args) {

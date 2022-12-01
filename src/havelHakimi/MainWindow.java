@@ -35,19 +35,23 @@ public class MainWindow {
         canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         nextStack = new ArrayStack<>();
         previousStack = new ArrayStack<>();
-        havelHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        // havelHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
         setupUI();
-        currentState = nextStack.pop();
-        currentState.run(canvas);
-        // System.out.println(nextStack.toString()); 
+        // havelHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
+        // havelHakimi(new ArrayList<>(Arrays.asList(4,4,3,3,2,2)));
+        // havelHakimi(new ArrayList<>(Arrays.asList(2,2,2,1)));
+        // havelHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
+        // havelHakimi(new ArrayList<>(Arrays.asList(4,3,2,1,0)));
+        if(havelHakimi(new ArrayList<>(Arrays.asList(4,3,2,1,0)))){
+            currentState = nextStack.pop();
+            currentState.run(canvas);
+        }
     }
 
-    private void havelHakimi(ArrayList<Integer> degreeSequence) {   
+    private boolean havelHakimi(ArrayList<Integer> degreeSequence) {   
         if(firstTheorem(degreeSequence) && firstDegree(degreeSequence)){
             Collections.sort(degreeSequence, Collections.reverseOrder());
             nextStack.push(new State(degreeSequence));
-            while(!isAllZero(degreeSequence)){
+            for(int i = 0; i< degreeSequence.size(); i++){
                 ArrayList<Integer> tempArr = new ArrayList<>();
                 for(int j = 1; j <= degreeSequence.get(0); j++) {
                     tempArr.add(degreeSequence.get(j) - 1);
@@ -58,20 +62,34 @@ public class MainWindow {
                 Collections.sort(tempArr, Collections.reverseOrder());
                 nextStack.push(new State(tempArr));
                 degreeSequence=tempArr;
+                if(isSumZero(degreeSequence)){
+                    return true;
+                }
+                if(isNegative(degreeSequence)){
+                    canvas.add(notGraphicalText,250,300);
+                    canvas.remove(nextButton);
+                    return false;
+                }
             }
-        } else if(isNegative(degreeSequence) || !firstTheorem(degreeSequence) || !firstDegree(degreeSequence) ) {
-            notGraphicalText = new GraphicsText("Degree Sequence Is Not Graphical");
-            notGraphicalText.setFontSize(20);
+            return true;
+        } 
+        else {
             canvas.add(notGraphicalText,250,300);
-        }
+            canvas.remove(nextButton);
+        }    
+        return false; 
     }
 
-    private boolean isAllZero(ArrayList<Integer> degreeSequence) {
-        for(int i = 0; i < degreeSequence.size();i++){
-            if(degreeSequence.get(i) <= 0) {
+    private boolean isSumZero(ArrayList<Integer> degreeSequence) {
+        int sum = 0;
+        for(int i = 0; i < degreeSequence.size(); i++){
+            sum += degreeSequence.get(i);
+            if(sum <= 0) {
+                System.out.println(sum);
                 return true;
             }
-        }
+            System.out.println(sum);
+        }   
         return false;
     }
 
@@ -89,7 +107,7 @@ public class MainWindow {
         for(int num: degreeSequence){
             total += num;
         }
-        if(degreeSequence.size() % 2 != 0 && total % 2 != 0){
+        if(total % 2 != 0){
             System.out.println("Failed First Theorem of Graph Theorem");
             return false;
         }
@@ -106,6 +124,8 @@ public class MainWindow {
     }
 
     private void setupUI() {
+        notGraphicalText = new GraphicsText("Degree Sequence Is Not Graphical");
+        notGraphicalText.setFontSize(20);
         nextButton = new Button("Next");
         nextButton.onClick(() -> goToNextState());
         canvas.add(nextButton, 320, 500);

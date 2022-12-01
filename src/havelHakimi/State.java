@@ -65,7 +65,6 @@ public class State {
  
     private void drawText(CanvasWindow canvas) {
         for(int i = 0; i < verticesMap.size(); i++){
-            verticesMap.get(i).getCenter().getX();
             Integer num = i;
             GraphicsText text = new GraphicsText(num.toString(), verticesMap.get(i).getCenter().getX()-4, verticesMap.get(i).getCenter().getY()+4);
             text.setFillColor(colors.get(i));

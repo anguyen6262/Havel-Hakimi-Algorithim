@@ -41,7 +41,7 @@ public class MainWindow {
         // havelHakimi(new ArrayList<>(Arrays.asList(2,2,2,1)));
         // havelHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
         // havelHakimi(new ArrayList<>(Arrays.asList(4,3,2,1,0)));
-        if(havelHakimi(new ArrayList<>(Arrays.asList(4,3,2,1,0)))){
+        if(havelHakimi(new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)))){
             currentState = nextStack.pop();
             currentState.run(canvas);
         }
@@ -51,7 +51,7 @@ public class MainWindow {
         if(firstTheorem(degreeSequence) && firstDegree(degreeSequence)){
             Collections.sort(degreeSequence, Collections.reverseOrder());
             nextStack.push(new State(degreeSequence));
-            for(int i = 0; i< degreeSequence.size(); i++){
+            while(!isSumZero(degreeSequence) || !isNegative(degreeSequence)){
                 ArrayList<Integer> tempArr = new ArrayList<>();
                 for(int j = 1; j <= degreeSequence.get(0); j++) {
                     tempArr.add(degreeSequence.get(j) - 1);
@@ -62,6 +62,7 @@ public class MainWindow {
                 Collections.sort(tempArr, Collections.reverseOrder());
                 nextStack.push(new State(tempArr));
                 degreeSequence=tempArr;
+                System.out.println(degreeSequence.toString()); 
                 if(isSumZero(degreeSequence)){
                     return true;
                 }
@@ -85,10 +86,8 @@ public class MainWindow {
         for(int i = 0; i < degreeSequence.size(); i++){
             sum += degreeSequence.get(i);
             if(sum <= 0) {
-                System.out.println(sum);
                 return true;
             }
-            System.out.println(sum);
         }   
         return false;
     }

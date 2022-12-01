@@ -28,36 +28,36 @@ public class State {
         double numVertices = intNumVertices;
         for (int i = 0; i < numVertices; i++) {
             double theta = i / numVertices * 2 * Math.PI;
-            // System.out.println(theta);
-            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 385, radius * Math.sin(theta) + 285, 30, 30);
+            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 500, radius * Math.sin(theta) + 285, 30, 30);
             vertex.setFillColor(Color.black);
             canvas.add(vertex);
             verticesMap.put(i, vertex);
-            // System.out.println(vertex.getX());
-            // System.out.println(vertex.getY());
-            
         }
     }
 
     private void drawEdges(CanvasWindow canvas, Graph graph, ArrayList<Integer> degreeSequence) {
+        List<Integer> degreeSequenceCopy = new ArrayList<Integer>();
+        for (Integer x : degreeSequence) {
+            degreeSequenceCopy.add(x);
+        }
         Map<Integer, Integer> savingDegrees = new HashMap<Integer, Integer>();
         List<Integer> markedVertices = new ArrayList<>();
-        while (Collections.max(degreeSequence) > 0) {
-            int maximum = Collections.max(degreeSequence);
-            int maxLocation = degreeSequence.indexOf(maximum);
-            degreeSequence.set(maxLocation, 0);
+        while (Collections.max(degreeSequenceCopy) > 0) {
+            int maximum = Collections.max(degreeSequenceCopy);
+            int maxLocation = degreeSequenceCopy.indexOf(maximum);
+            degreeSequenceCopy.set(maxLocation, 0);
             for (int i = 0; i < maximum; i++) {
-                int nextMax = Collections.max(degreeSequence);
-                int nextMaxLocation = degreeSequence.indexOf(nextMax);
+                int nextMax = Collections.max(degreeSequenceCopy);
+                int nextMaxLocation = degreeSequenceCopy.indexOf(nextMax);
                 markedVertices.add(nextMaxLocation);
                 savingDegrees.put(nextMaxLocation, nextMax - 1);
-                degreeSequence.set(nextMaxLocation, 0);
+                degreeSequenceCopy.set(nextMaxLocation, 0);
                 graph.addEdge(maxLocation, nextMaxLocation);
                 Line edge = new Line(verticesMap.get(maxLocation).getCenter(), verticesMap.get(nextMaxLocation).getCenter());
                 canvas.add(edge);
             }
             for (int location : markedVertices) {
-                degreeSequence.set(location, savingDegrees.get(location));
+                degreeSequenceCopy.set(location, savingDegrees.get(location));
             }
             markedVertices.clear();
         }
@@ -78,15 +78,10 @@ public class State {
         drawVertices(canvas, this.degreeSequence.size());
         drawEdges(canvas, graph, this.degreeSequence);
         drawText(canvas);
-    }     
-
-    public static void main(String[] args) {
-        // CanvasWindow canvas = new CanvasWindow("State", 800, 600);
-        // State state = new State(new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(4,5,4,3,3,3,4)));
-        // state.run(canvas, new ArrayList<>(Arrays.asList(3,2,3,4,2,4)));
-        // state.run(canvas, graph.V(), graph, new ArrayList<>(Arrays.asList(3,3,3,3,2,2)));
-        //System.out.println(graph.toString());            
-    }   
+    }    
+    
+    public String toString(){
+        return degreeSequence.toString();
+    }
 }
 

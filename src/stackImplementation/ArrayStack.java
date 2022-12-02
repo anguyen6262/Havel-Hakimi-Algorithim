@@ -112,18 +112,6 @@ public class ArrayStack<T> implements StackADT<T>
 	 */
 	public String toString()
 	{
-		// T[] stackCopy = stack.clone();
-		// //T[] newArray = new T[size()];
-		// for (int i = 0; i < size(); i++) {
-		// 	newArray[i] = stackCopy[stackCopy.size()-1];
-		// }
-		// return Arrays.toString(Arrays.copyOfRange(stack, 0, top));  // temp
-
-		// String[] arrayToReturn = new String[size()];
-		// for (int i = 0; i < size(); i++) {
-		// 	arrayToReturn[i] = stack[i].toString();
-		// }
-		// return arrayToReturn;
 		StringBuilder stb = new StringBuilder();
 		stb.append("[");
 		for(int i=0; i<size();i++){

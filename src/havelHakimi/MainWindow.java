@@ -1,16 +1,13 @@
 package havelHakimi;
 
-import java.awt.Color;
+// import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.Ellipse;
-import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.GraphicsText;
-import edu.macalester.graphics.Line;
-import edu.macalester.graphics.Point;
+// import edu.macalester.graphics.Line;
+// import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
 import edu.macalester.graphics.ui.TextField;
@@ -45,15 +42,10 @@ public class MainWindow {
         // havelHakimi(new ArrayList<>(Arrays.asList(2,2,2,1)));
         // havelHakimi(new ArrayList<>(Arrays.asList(2,1,0)));
         // havelHakimi(new ArrayList<>(Arrays.asList(4,3,2,1,0)));
-        
     }
 
     private boolean havelHakimi(ArrayList<Integer> degreeSequence) {  
-        degreeSequence.sort(Comparator.reverseOrder()); 
-        System.out.println(degreeSequence);
         if(firstTheorem(degreeSequence) && firstDegree(degreeSequence)){
-            // Collections.sort(degreeSequence, Collections.reverseOrder());
-            System.out.println(degreeSequence);
             nextStack.push(new State(degreeSequence));
             while(!isSumZero(degreeSequence) || !isNegative(degreeSequence)){
                 ArrayList<Integer> tempArr = new ArrayList<>();
@@ -76,8 +68,7 @@ public class MainWindow {
                 }
             }
             return true;
-        } 
-        else {
+        } else {
             canvas.add(notGraphicalText,400,335);
             canvas.remove(nextButton);
         }    
@@ -117,7 +108,7 @@ public class MainWindow {
     }
 
     private boolean firstDegree(ArrayList<Integer> degreeSequence) {
-        Collections.sort(degreeSequence);
+        Collections.sort(degreeSequence, Collections.reverseOrder());
         if(degreeSequence.get(0) >= degreeSequence.size()) {
             System.out.println("First vertex has a higher degree than the order of the graph");
             return false;
@@ -163,7 +154,7 @@ public class MainWindow {
     private void removeGraph() {
         canvas.removeAll();
         canvas.add(infoFrame);
-        // canvas.add(graphFrame);
+        canvas.add(graphFrame);
         canvas.add(titleFrame);
         // canvas.add(xMiddle);
         // canvas.add(yMiddle);

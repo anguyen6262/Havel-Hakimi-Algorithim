@@ -33,7 +33,7 @@ public class MainWindow {
     private State currentState;
     private TextField inputField;
     private ArrayList<Integer> inputArrayList;
-    
+    private 
     public MainWindow(){
         canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         setupUI();
@@ -216,6 +216,5 @@ public class MainWindow {
 
     public static void main(String[] args) {
         MainWindow window = new MainWindow();
-      
     }
 }

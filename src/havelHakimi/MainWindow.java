@@ -13,6 +13,9 @@ import edu.macalester.graphics.ui.Button;
 import edu.macalester.graphics.ui.TextField;
 import stackImplementation.ArrayStack;
 
+/**
+ * MainWindow to show the Haveli Hakimi algorithm.
+ */
 public class MainWindow {
     private static final int CANVAS_WIDTH = 800;
     private static final int CANVAS_HEIGHT = 600;
@@ -36,11 +39,18 @@ public class MainWindow {
     private ArrayList<Integer> inputArrayList;
     private GraphicsText reason;
 
+    /**
+     * Constructs a MainWindow object.
+     */
     public MainWindow(){
         canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         setupUI();
     }
 
+    /**
+     * Checks whether or not a degree sequence is graphical using the Havel Hakimi algorithm.
+     * @return true if the degree sequence is graphical.
+     */
     private boolean havelHakimi(ArrayList<Integer> degreeSequence) {  
         if(firstDegree(degreeSequence) && firstTheorem(degreeSequence)){
             nextStack.push(new State(degreeSequence));
@@ -70,12 +80,19 @@ public class MainWindow {
         return false; 
     }
 
+    /**
+     * Displays text and removes buttons if the input degree sequence is not graphical.
+     */
     private void notGraphicalResult() {
         canvas.add(notGraphicalText,245,340);
         removeButtonIfOnCanvas(lastStateButton);
         removeButtonIfOnCanvas(nextButton);
     }
 
+    /**
+     * Checks if any vertex in the graph has a negative degree.
+     * @return true if any integer in the degree sequence is a negative number.
+     */
     private boolean isNegative(ArrayList<Integer> degreeSequence) {
         for(int i = 0; i < degreeSequence.size();i++){
             if(degreeSequence.get(i) < 0) {
@@ -85,6 +102,9 @@ public class MainWindow {
         return false;
     }
 
+    /**
+     * Checks whethor or not the the sum of the integers in the degree sequence is even.
+     */
     private boolean firstTheorem(ArrayList<Integer> degreeSequence) {
         int total = 0;
         for(int num: degreeSequence){
@@ -98,6 +118,10 @@ public class MainWindow {
         return true;
     }
 
+    /**
+     * Checks whether or not the maximal degree in the degree sequence is less than the degrees of the other 
+     * vertices.
+     */
     private boolean firstDegree(ArrayList<Integer> degreeSequence) {
         Collections.sort(degreeSequence, Collections.reverseOrder());
         if(degreeSequence.get(0) >= degreeSequence.size()) {
@@ -108,6 +132,9 @@ public class MainWindow {
         return true;
     }
 
+    /**
+     * Creates the user interface.
+     */
     private void setupUI() {
         notGraphicalText = new GraphicsText("Degree sequence is not graphical:");
         notGraphicalText.setFontSize(20);
@@ -146,6 +173,9 @@ public class MainWindow {
         canvas.add(inputField,50,500);
     }
 
+    /**
+     * Clears the canvas, but preserves all the UI objects
+     */
     private void removeGraph() {
         canvas.removeAll();
         canvas.add(graphFrame);

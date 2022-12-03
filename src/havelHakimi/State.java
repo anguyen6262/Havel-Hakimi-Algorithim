@@ -14,7 +14,7 @@ import edu.macalester.graphics.Line;
 import edu.macalester.graphics.GraphicsText;
 
 public class State {
-    List<Color> colors= new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.PINK, Color.GRAY, Color.CYAN));
+    List<Color> colors= new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.PINK, Color.YELLOW, Color.CYAN));
     Map<Integer, Ellipse> verticesMap;
     ArrayList<Integer> degreeSequence;
     
@@ -28,7 +28,7 @@ public class State {
         double numVertices = intNumVertices;
         for (int i = 0; i < numVertices; i++) {
             double theta = i / numVertices * 2 * Math.PI;
-            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 535, radius * Math.sin(theta) + 322.5, 30, 30);
+            Ellipse vertex = new Ellipse(radius * Math.cos(theta) + 385, radius * Math.sin(theta) + 322.5, 30, 30);
             vertex.setFillColor(Color.black);
             canvas.add(vertex);
             verticesMap.put(i, vertex);

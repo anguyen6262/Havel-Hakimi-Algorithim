@@ -44,12 +44,7 @@ public class MainWindow {
     private boolean havelHakimi(ArrayList<Integer> degreeSequence) {  
         if(firstDegree(degreeSequence) && firstTheorem(degreeSequence)){
             nextStack.push(new State(degreeSequence));
-<<<<<<< Updated upstream
             while(degreeSequence.size() > 1){
-=======
-            // while(!isSumZero(degreeSequence) || !isNegative(degreeSequence)){
-            while(degreeSequence.size() >= 2){
->>>>>>> Stashed changes
                 ArrayList<Integer> tempArr = new ArrayList<>();
                 for(int j = 1; j <= degreeSequence.get(0); j++) {
                     tempArr.add(degreeSequence.get(j) - 1);
@@ -67,12 +62,6 @@ public class MainWindow {
                     canvas.add(reason,280,360);
                     return false;
                 }
-<<<<<<< Updated upstream
-=======
-                // if(isSumZero(degreeSequence)){
-                //     return true;
-                // }
->>>>>>> Stashed changes
             }
             return true;
         } else {

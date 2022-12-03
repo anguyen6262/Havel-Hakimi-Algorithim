@@ -34,6 +34,7 @@ public class MainWindow {
     private State currentState;
     private TextField inputField;
     private ArrayList<Integer> inputArrayList;
+    private GraphicsText reason;
 
     public MainWindow(){
         canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -41,10 +42,9 @@ public class MainWindow {
     }
 
     private boolean havelHakimi(ArrayList<Integer> degreeSequence) {  
-        if(firstTheorem(degreeSequence) && firstDegree(degreeSequence)){
+        if(firstDegree(degreeSequence) && firstTheorem(degreeSequence)){
             nextStack.push(new State(degreeSequence));
-            // while(!isSumZero(degreeSequence) || !isNegative(degreeSequence)){
-            while(degreeSequence.size() >= 1){
+            while(degreeSequence.size() > 1){
                 ArrayList<Integer> tempArr = new ArrayList<>();
                 for(int j = 1; j <= degreeSequence.get(0); j++) {
                     tempArr.add(degreeSequence.get(j) - 1);
@@ -58,10 +58,9 @@ public class MainWindow {
                 
                 if(isNegative(degreeSequence)){
                     notGraphicalResult();
+                    reason.setText("Algorithm resulted in a contradiction");
+                    canvas.add(reason,280,360);
                     return false;
-                }
-                if(isSumZero(degreeSequence)){
-                    return true;
                 }
             }
             return true;
@@ -75,17 +74,6 @@ public class MainWindow {
         canvas.add(notGraphicalText,245,340);
         removeButtonIfOnCanvas(lastStateButton);
         removeButtonIfOnCanvas(nextButton);
-    }
-
-    private boolean isSumZero(ArrayList<Integer> degreeSequence) {
-        int sum = 0;
-        for(int i = 0; i < degreeSequence.size(); i++){
-            sum += degreeSequence.get(i);
-            if(sum <= 0) {
-                return true;
-            }
-        }   
-        return false;
     }
 
     private boolean isNegative(ArrayList<Integer> degreeSequence) {
@@ -103,7 +91,8 @@ public class MainWindow {
             total += num;
         }
         if(total % 2 != 0){
-            System.out.println("Failed First Theorem of Graph Theorem");
+            reason.setText("Degree sum is odd");
+            canvas.add(reason, 330,360);
             return false;
         }
         return true;
@@ -112,15 +101,18 @@ public class MainWindow {
     private boolean firstDegree(ArrayList<Integer> degreeSequence) {
         Collections.sort(degreeSequence, Collections.reverseOrder());
         if(degreeSequence.get(0) >= degreeSequence.size()) {
-            System.out.println("First vertex has a higher degree than the order of the graph");
+            reason.setText("Maximal degree is not less than the number of vertices");
+            canvas.add(reason, 215,355);
             return false;
         }
         return true;
     }
 
     private void setupUI() {
-        notGraphicalText = new GraphicsText("Degree Sequence Is Not Graphical");
+        notGraphicalText = new GraphicsText("Degree sequence is not graphical:");
         notGraphicalText.setFontSize(20);
+        reason = new GraphicsText();
+        reason.setFontSize(15);
         nextButton = new Button("Next");
         nextButton.onClick(() -> goToNextState().run(canvas));
         lastStateButton = new Button("Skip To End");

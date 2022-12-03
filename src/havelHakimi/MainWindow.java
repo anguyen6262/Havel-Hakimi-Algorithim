@@ -22,6 +22,8 @@ public class MainWindow {
     private Button previousButton;
     private Button exitButton;
     private Button enterButton;
+    private Button lastStateButton;
+    private Button firstStateButton;
     private CanvasWindow canvas;
     // private Line xMiddle;
     // private Line yMiddle;
@@ -33,6 +35,7 @@ public class MainWindow {
     private State currentState;
     private TextField inputField;
     private ArrayList<Integer> inputArrayList;
+
     public MainWindow(){
         canvas = new CanvasWindow("Havel-Hakimi", CANVAS_WIDTH, CANVAS_HEIGHT);
         setupUI();
@@ -46,7 +49,8 @@ public class MainWindow {
     private boolean havelHakimi(ArrayList<Integer> degreeSequence) {  
         if(firstTheorem(degreeSequence) && firstDegree(degreeSequence)){
             nextStack.push(new State(degreeSequence));
-            while(!isSumZero(degreeSequence) || !isNegative(degreeSequence)){
+            // while(!isSumZero(degreeSequence) || !isNegative(degreeSequence)){
+            while(degreeSequence.size() >= 1){
                 ArrayList<Integer> tempArr = new ArrayList<>();
                 for(int j = 1; j <= degreeSequence.get(0); j++) {
                     tempArr.add(degreeSequence.get(j) - 1);
@@ -63,6 +67,8 @@ public class MainWindow {
                 if(isNegative(degreeSequence)){
                     canvas.add(notGraphicalText,400,335);
                     canvas.remove(nextButton);
+                    canvas.remove(firstStateButton);
+                    canvas.remove(lastStateButton);
                     return false;
                 }
             }
@@ -70,6 +76,8 @@ public class MainWindow {
         } else {
             canvas.add(notGraphicalText,400,335);
             canvas.remove(nextButton);
+            canvas.remove(firstStateButton);
+            canvas.remove(lastStateButton);
         }    
         return false; 
     }
@@ -119,12 +127,16 @@ public class MainWindow {
         notGraphicalText = new GraphicsText("Degree Sequence Is Not Graphical");
         notGraphicalText.setFontSize(20);
         nextButton = new Button("Next");
-        nextButton.onClick(() -> goToNextState());
+        nextButton.onClick(() -> goToNextState().run(canvas));
+        lastStateButton = new Button("Skip To End");
+        lastStateButton.onClick(() -> goToLastState().run(canvas));
+        firstStateButton = new Button("Go To Beginning");
+        firstStateButton.onClick(() -> goToFirstState().run(canvas));
         enterButton = new Button("Enter");
         canvas.add(enterButton, 610, 500);
         enterButton.onClick(() -> enterDegreeSequence());
         previousButton = new Button("Previous");
-        previousButton.onClick(()->goToPreviousState());
+        previousButton.onClick(()->goToPreviousState().run(canvas));
         exitButton = new Button("Exit");
         exitButton.onClick(() -> canvas.closeWindow());
         canvas.add(exitButton, 672, 500);
@@ -161,35 +173,55 @@ public class MainWindow {
         // canvas.add(xMiddle);
         canvas.add(previousButton,370, 500);
         canvas.add(nextButton, 450, 500);
+        canvas.add(firstStateButton,370,530);
+        canvas.add(lastStateButton,500,530);
         canvas.add(enterButton);
         canvas.add(inputField);
         canvas.add(title);
         canvas.add(exitButton);
     }
 
-    private void goToNextState(){
+    private State goToLastState() {
+        while(!nextStack.isEmpty()){
+            removeGraph();
+            goToNextState();
+        }
+        return currentState;
+    }
+
+    private State goToFirstState(){
+        while (!previousStack.isEmpty()) {
+            removeGraph();
+            goToPreviousState();
+        }
+        return currentState;
+    }
+
+    private State goToNextState(){
         if(!nextStack.isEmpty()){
             removeGraph();
         }
         previousStack.push(currentState);
         currentState = nextStack.pop();
-        currentState.run(canvas);
         if (nextStack.isEmpty()) {
             canvas.remove(nextButton);
+            canvas.remove(lastStateButton);
         }
+        return currentState;
     } 
 
-    private void goToPreviousState(){
+    private State goToPreviousState(){
         if (!previousStack.isEmpty()) {
             removeGraph();
         }
         nextStack.push(currentState);
         currentState = previousStack.pop();
-        currentState.run(canvas);
 
         if (previousStack.isEmpty()) {
             canvas.remove(previousButton);
+            canvas.remove(firstStateButton);
         }
+        return currentState;
     }
 
     private void enterDegreeSequence() {
@@ -199,6 +231,9 @@ public class MainWindow {
             removeGraph();           
             if(canvas.getElementAt(previousButton.getCenter().getX(),previousButton.getCenter().getY()) != null) {
                 canvas.remove(previousButton);
+            }
+            if(canvas.getElementAt(firstStateButton.getCenter().getX(),firstStateButton.getCenter().getY()) != null) {
+                canvas.remove(firstStateButton);
             }
             inputArrayList = new ArrayList<>();
             String[] textArr = inputField.getText().split(",");

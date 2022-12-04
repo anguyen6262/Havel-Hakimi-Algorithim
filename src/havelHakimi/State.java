@@ -17,12 +17,19 @@ public class State {
     List<Color> colors= new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.ORANGE, Color.PINK, Color.YELLOW, Color.CYAN));
     Map<Integer, Ellipse> verticesMap;
     ArrayList<Integer> degreeSequence;
-    
+    /**
+     * Constructs a state object for the given degree sequence.
+     * @param degreeSequence
+     */
     public State(ArrayList<Integer> degreeSequence){
         verticesMap = new HashMap<>();
         this.degreeSequence = degreeSequence;
     }
-
+    /**
+     * Creates and adds a given number of vertices to a given canvas. Vertices will be places around a circle in equal intervals.
+     * @param canvas
+     * @param intNumVertices
+     */
     private void drawVertices(CanvasWindow canvas, int intNumVertices) {
         double radius = 100;
         double numVertices = intNumVertices;
@@ -34,7 +41,14 @@ public class State {
             verticesMap.put(i, vertex);
         }
     }
-
+    
+    /**
+     * Given a graph and degree sequences, creates edges for that graph such that the degree sequence of it is the given one, and adds
+     * the edges to the given canvas.
+     * @param canvas
+     * @param graph
+     * @param degreeSequence
+     */
     private void drawEdges(CanvasWindow canvas, Graph graph, ArrayList<Integer> degreeSequence) {
         List<Integer> degreeSequenceCopy = new ArrayList<Integer>();
         for (Integer x : degreeSequence) {
@@ -62,7 +76,11 @@ public class State {
             markedVertices.clear();
         }
     }
- 
+
+    /**
+     * Labels the vertices from 1 to n-1, where n is the total number of vertices.
+     * @param canvas
+     */
     private void drawText(CanvasWindow canvas) {
         for(int i = 0; i < verticesMap.size(); i++){
             Integer num = i;
@@ -71,7 +89,10 @@ public class State {
             canvas.add(text);
         }
     }
-
+    /**
+     * Creates the graph of the degree sequence given to create the state, and adds it to the given canvas.
+     * @param canvas
+     */
     public void run(CanvasWindow canvas){
         Graph graph = new Graph(this.degreeSequence.size());
         drawVertices(canvas, this.degreeSequence.size());
@@ -79,6 +100,9 @@ public class State {
         drawText(canvas);
     }    
     
+    /**
+     * Returns a string representation of the array used to construct the state.
+     */
     public String toString(){
         return degreeSequence.toString();
     }

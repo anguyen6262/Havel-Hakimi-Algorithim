@@ -1,13 +1,10 @@
 package havelHakimi;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
-import edu.macalester.graphics.Line;
-import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.Button;
 import edu.macalester.graphics.ui.TextField;
@@ -28,8 +25,6 @@ public class MainWindow {
     private Button lastStateButton;
     private Button firstStateButton;
     private CanvasWindow canvas;
-    private Line xMiddle;
-    private Line yMiddle;
     private GraphicsText title;
     private Rectangle graphFrame;
     private Rectangle titleFrame;
@@ -154,12 +149,6 @@ public class MainWindow {
         exitButton = new Button("Exit");
         exitButton.onClick(() -> canvas.closeWindow());
         canvas.add(exitButton, 155, 527.5);
-        yMiddle = new Line(new Point(400,0), new Point(400,600));
-        yMiddle.setStrokeColor(Color.gray);
-        canvas.add(yMiddle);
-        xMiddle = new Line(new Point(0,(525/2) +75), new Point(800,(525/2)+75));
-        xMiddle.setStrokeColor(Color.gray);
-        canvas.add(xMiddle);
         title = new GraphicsText("Havel-Hakimi Algorithm", 140,55);
         title.setFontSize(50);
         canvas.add(title);
@@ -180,10 +169,6 @@ public class MainWindow {
         canvas.removeAll();
         canvas.add(graphFrame);
         canvas.add(titleFrame);
-        canvas.add(xMiddle);
-        canvas.add(yMiddle);
-        canvas.add(yMiddle);
-        canvas.add(xMiddle);
         canvas.add(previousButton,550, 500);
         canvas.add(nextButton, 630, 500);
         canvas.add(firstStateButton,505,527.5);

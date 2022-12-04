@@ -194,6 +194,9 @@ public class MainWindow {
         canvas.add(exitButton);
     }
 
+    /**
+     * Retrieves the last state in nextStack and removes the graph drawn of the current state.
+     */
     private State goToLastState() {
         while(!nextStack.isEmpty()){
             removeGraph();
@@ -201,7 +204,10 @@ public class MainWindow {
         }
         return currentState;
     }
-
+    
+    /**
+     * Retrieves the last state in previousStack and removes the graph drawn of the current state.
+     */
     private State goToFirstState(){
         while (!previousStack.isEmpty()) {
             removeGraph();
@@ -210,6 +216,9 @@ public class MainWindow {
         return currentState;
     }
 
+    /**
+     * Retrieves the state that is on top of nextStack and pushes the currentState to the top of previousStack.
+     */
     private State goToNextState(){
         if(!nextStack.isEmpty()){
             removeGraph();
@@ -223,6 +232,9 @@ public class MainWindow {
         return currentState;
     } 
 
+    /**
+     * Retrieves the state that is on top of previousStack and pushes the currentState to the top of nextStack.
+     */
     private State goToPreviousState(){
         if (!previousStack.isEmpty()) {
             removeGraph();
@@ -237,12 +249,18 @@ public class MainWindow {
         return currentState;
     }
 
+    /**
+     * Removes button if it is currently displayed on the canvas.
+     */
     private void removeButtonIfOnCanvas(Button button) {
         if(canvas.getElementAt(button.getCenter().getX(),button.getCenter().getY()) != null) {
             canvas.remove(button);
         } 
     }
 
+    /**
+     * Allows user to input a degree sequence.
+     */
     private void enterDegreeSequence() {
         if(!inputField.getText().equals("")) {
             nextStack = new ArrayStack<>();
